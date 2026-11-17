@@ -1,0 +1,36 @@
+---
+/**
+ * Footer.astro — Pie de página
+ *
+ * Declara con honestidad qué es este sitio (un trabajo académico, no un
+ * sitio oficial) y hasta qué fecha se revisaron los datos. La fecha se
+ * calcula desde las referencias: es la consulta más reciente registrada.
+ */
+import { getCollection } from 'astro:content';
+import { fechaLarga } from '../lib/formato';
+
+const referencias = await getCollection('referencias');
+// Las fechas AAAA-MM-DD se ordenan como texto; la última es la más reciente.
+const ultimaConsulta = referencias
+  .map((referencia) => referencia.data.fechaConsulta)
+  .sort()
+  .at(-1);
+---
+
+<footer class="pie">
+  <div class="contenedor pie__fila">
+    <p>
+      Sitio elaborado por estudiantes de Ingeniería en Informática para la asignatura EFE685,
+      Electivo de Computación Móvil. No es un sitio oficial de la UTEM.
+    </p>
+    {
+      ultimaConsulta && (
+        <p>
+          Datos revisados el {fechaLarga(ultimaConsulta)}. Aranceles, vacantes y fechas pueden
+          cambiar: confirma siempre en la fuente citada.
+        </p>
+      )
+    }
+    <p><a href="#inicio">Volver al inicio</a></p>
+  </div>
+</footer>

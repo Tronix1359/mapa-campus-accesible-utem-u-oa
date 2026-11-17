@@ -1,0 +1,52 @@
+---
+/**
+ * Referencias.astro — ¿De dónde sale esto?
+ *
+ * Lista todas las fuentes en formato APA 7, con su fecha de consulta.
+ * Cada elemento tiene el ancla `ref-F01`, destino de las citas breves del
+ * resto de la página (ver Cita.astro).
+ *
+ * El texto APA se arma aquí a partir de campos separados (autor, fecha,
+ * título, URL). Guardar los campos por separado permite validarlos uno a
+ * uno en el esquema y mantiene un formato idéntico en todas las entradas.
+ */
+import { getCollection } from 'astro:content';
+import Seccion from './Seccion.astro';
+import { fechaLarga } from '../lib/formato';
+
+// Orden por identificador: F01, F02, … (comparación de texto).
+const referencias = (await getCollection('referencias')).sort((a, b) => a.id.localeCompare(b.id));
+
+/** Descripción entre corchetes que APA 7 pone tras el título, si existe. */
+function sufijo(descripcion: string | undefined): string {
+  return descripcion ? ` [${descripcion}]` : '';
+}
+
+/** Nombre del sitio seguido de punto, solo cuando difiere del autor. */
+function sitio(nombre: string | undefined): string {
+  return nombre ? `${nombre}. ` : '';
+}
+---
+
+<Seccion id="referencias" pregunta="¿De dónde sale esta información?" titulo="Referencias" alterna>
+  <p class="entrada">
+    Cada dato de esta página lleva un código entre corchetes. Ese código apunta a una de estas
+    fuentes, citadas según las normas de la American Psychological Association, séptima edición
+    (APA 7).
+  </p>
+  <ol class="referencias">
+    {
+      referencias.map((referencia) => (
+        <li id={`ref-${referencia.id}`} class="referencia">
+          <span class="referencia__id">{referencia.id}</span>
+          <p class="referencia__texto">
+            {referencia.data.autor}. ({referencia.data.fecha}). <cite>{referencia.data.titulo}</cite>{sufijo(referencia.data.descripcion)}. {sitio(referencia.data.sitio)}Recuperado el {fechaLarga(referencia.data.fechaConsulta)}, de <a href={referencia.data.url} rel="noopener noreferrer">{referencia.data.url}</a>
+          </p>
+          <span class={`referencia__tipo referencia__tipo--${referencia.data.tipo}`}>
+            Fuente {referencia.data.tipo}
+          </span>
+        </li>
+      ))
+    }
+  </ol>
+</Seccion>

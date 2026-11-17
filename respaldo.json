@@ -1,0 +1,42 @@
+[
+  {
+    "id": "acreditacion-institucional",
+    "orden": 1,
+    "titulo": "Universidad acreditada por cinco años",
+    "texto": "La UTEM informó en octubre de 2026 que obtuvo cinco años de acreditación institucional, en nivel Avanzado, hasta octubre de 2031. La acreditación la otorga la Comisión Nacional de Acreditación (CNA-Chile).",
+    "tipo": "dato",
+    "fuentes": ["F05"]
+  },
+  {
+    "id": "certificacion-carrera",
+    "orden": 2,
+    "titulo": "Carrera certificada hasta 2030",
+    "texto": "La carrera tiene una certificación de calidad por cinco años, del 16 de junio de 2025 al 16 de junio de 2030. La otorgaron la Agencia Acreditadora de Chile y el Consejo de Acreditación en Informática y Computación (CONAIC) de México.",
+    "tipo": "dato",
+    "fuentes": ["F01"]
+  },
+  {
+    "id": "certificacion-no-es-cna",
+    "orden": 3,
+    "titulo": "Certificación no es lo mismo que acreditación",
+    "texto": "La acreditación institucional evalúa a toda la universidad y la entrega la CNA-Chile. La certificación de la carrera la entregan agencias externas. Son dos respaldos distintos y conviene revisar ambos.",
+    "tipo": "interpretacion",
+    "fuentes": ["F01", "F05"]
+  },
+  {
+    "id": "plan-oficial",
+    "orden": 4,
+    "titulo": "Plan de estudios aprobado por resolución",
+    "texto": "El plan vigente se aprobó con la Resolución Exenta N.° 03102, del 2 de agosto de 2022. La resolución fija 8 semestres y 240 créditos del Sistema de Créditos Transferibles (SCT-Chile). La unidad responsable es la Escuela de Informática.",
+    "tipo": "dato",
+    "fuentes": ["F03"]
+  },
+  {
+    "id": "estatal-gratuidad",
+    "orden": 5,
+    "titulo": "Universidad estatal con gratuidad",
+    "texto": "La UTEM es una universidad estatal adscrita a la gratuidad. La gratuidad se asigna por criterio socioeconómico y se solicita con el Formulario Único de Acreditación Socioeconómica (FUAS).",
+    "tipo": "dato",
+    "fuentes": ["F04"]
+  }
+]

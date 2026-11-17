@@ -1,0 +1,41 @@
+---
+/**
+ * src/pages/index.astro — Página única del sitio (landing page)
+ *
+ * Esta página no contiene textos de contenido: solo decide QUÉ secciones
+ * se muestran y EN QUÉ ORDEN. Cada sección es un componente que lee sus
+ * datos de una colección validada (src/content/).
+ *
+ * El orden responde al mapa de contenidos (INFORME, Fase C) y a la
+ * encuesta de la Fase B: trabajo e ingresos fue lo más consultado, por eso
+ * Campo laboral sube al segundo lugar. Siguen respaldo y admisión (costo
+ * y puntaje). El plan de estudios, menos priorizado, va después. Las
+ * referencias cierran la página porque todas las citas apuntan a ellas.
+ */
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Hero from '../components/Hero.astro';
+import SobreCarrera from '../components/SobreCarrera.astro';
+import PerfilEgreso from '../components/PerfilEgreso.astro';
+import Malla from '../components/Malla.astro';
+import CampoLaboral from '../components/CampoLaboral.astro';
+import Respaldo from '../components/Respaldo.astro';
+import Admision from '../components/Admision.astro';
+import Faq from '../components/Faq.astro';
+import Referencias from '../components/Referencias.astro';
+
+const title = 'Ingeniería en Informática UTEM: plan de estudios, campo laboral y admisión';
+const description =
+  'Conoce la carrera de Ingeniería en Informática de la UTEM: 8 semestres, malla por semestre, empleabilidad, acreditación y cómo postular. Cada dato con su fuente.';
+---
+
+<BaseLayout title={title} description={description}>
+  <Hero />
+  <SobreCarrera />
+  <CampoLaboral />
+  <PerfilEgreso />
+  <Respaldo />
+  <Admision />
+  <Malla />
+  <Faq />
+  <Referencias />
+</BaseLayout>

@@ -1,0 +1,37 @@
+---
+/**
+ * Seccion.astro — Envoltorio común de cada sección de la página
+ *
+ * Todas las secciones repiten el mismo patrón: la pregunta del postulante
+ * que responden, un título <h2> y el contenido. Centralizarlo aquí asegura
+ * una jerarquía de encabezados correcta (un <h1> en la portada, un <h2>
+ * por sección) y un estilo uniforme.
+ *
+ * `aria-labelledby` vincula la <section> con su título: los lectores de
+ * pantalla la listan como región con nombre y permiten saltar a ella.
+ */
+interface Props {
+  /** Ancla de la sección; la usa el menú (href="#id"). */
+  id: string;
+  /** Pregunta del postulante que la sección responde. */
+  pregunta: string;
+  /** Título visible de la sección. */
+  titulo: string;
+  /** Alterna el color de fondo para marcar el cambio de bloque. */
+  alterna?: boolean;
+}
+
+const { id, pregunta, titulo, alterna = false } = Astro.props;
+---
+
+<section
+  id={id}
+  aria-labelledby={`${id}-titulo`}
+  class:list={['seccion', { 'seccion--alterna': alterna }]}
+>
+  <div class="contenedor">
+    <p class="seccion__pregunta">{pregunta}</p>
+    <h2 id={`${id}-titulo`} class="seccion__titulo">{titulo}</h2>
+    <slot />
+  </div>
+</section>

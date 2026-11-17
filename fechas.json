@@ -1,0 +1,37 @@
+[
+  {
+    "id": "rendicion",
+    "inicio": "2026-11-30",
+    "hito": "Rendición de la Prueba de Acceso a la Educación Superior (PAES) Regular",
+    "cuando": "30 de noviembre, 1 y 2 de diciembre de 2026",
+    "fuentes": ["F06"]
+  },
+  {
+    "id": "resultados-paes",
+    "inicio": "2027-01-04",
+    "hito": "Publicación de los resultados de la PAES",
+    "cuando": "4 de enero de 2027, 08:00 horas",
+    "fuentes": ["F12"]
+  },
+  {
+    "id": "postulacion",
+    "inicio": "2027-01-04",
+    "hito": "Postulación a las carreras",
+    "cuando": "Del 4 de enero (09:00 horas) al 7 de enero de 2027 (13:00 horas)",
+    "fuentes": ["F07"]
+  },
+  {
+    "id": "seleccion",
+    "inicio": "2027-01-18",
+    "hito": "Resultados de selección",
+    "cuando": "18 de enero de 2027",
+    "fuentes": ["F12"]
+  },
+  {
+    "id": "matricula",
+    "inicio": "2027-01-19",
+    "hito": "Matrícula, en dos etapas",
+    "cuando": "Del 19 al 28 de enero de 2027",
+    "fuentes": ["F12"]
+  }
+]

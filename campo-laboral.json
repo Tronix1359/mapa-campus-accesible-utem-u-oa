@@ -1,0 +1,30 @@
+[
+  {
+    "id": "desarrollo",
+    "orden": 1,
+    "titulo": "Desarrollo de software",
+    "descripcion": "Construir productos de software, sistemas de información y soluciones algorítmicas, o dirigir al equipo que los desarrolla.",
+    "fuentes": ["F01", "F02"]
+  },
+  {
+    "id": "redes",
+    "orden": 2,
+    "titulo": "Redes y operación",
+    "descripcion": "Operar y dar soporte a redes de datos, y administrar los recursos computacionales de una organización.",
+    "fuentes": ["F01", "F02"]
+  },
+  {
+    "id": "proyectos",
+    "orden": 3,
+    "titulo": "Proyectos y planificación",
+    "descripcion": "Dirigir proyectos informáticos, evaluar tecnologías y planificar cómo una organización adopta sistemas nuevos.",
+    "fuentes": ["F01"]
+  },
+  {
+    "id": "seguridad",
+    "orden": 4,
+    "titulo": "Seguridad y auditoría",
+    "descripcion": "Definir políticas de seguridad de la información y revisar que los sistemas las cumplan.",
+    "fuentes": ["F01"]
+  }
+]

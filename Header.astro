@@ -1,0 +1,47 @@
+---
+/**
+ * Header.astro — Encabezado fijo con el menú de la página
+ *
+ * No usa JavaScript. En pantallas angostas el menú no se oculta tras un
+ * botón: la lista se desplaza en horizontal. Así se evita un script y el
+ * menú sigue funcionando con teclado y sin JavaScript.
+ *
+ * Los enlaces se generan desde un arreglo: agregar una sección exige un
+ * solo cambio y el menú nunca queda desalineado con la página.
+ */
+interface EnlaceMenu {
+  href: string;
+  texto: string;
+}
+
+const enlaces: readonly EnlaceMenu[] = [
+  { href: '#carrera', texto: 'La carrera' },
+  { href: '#campo', texto: 'Campo laboral' },
+  { href: '#perfil', texto: 'Perfil' },
+  { href: '#respaldo', texto: 'Respaldo' },
+  { href: '#admision', texto: 'Admisión' },
+  { href: '#plan', texto: 'Plan de estudios' },
+  { href: '#preguntas', texto: 'Preguntas' },
+  { href: '#referencias', texto: 'Referencias' },
+];
+---
+
+<header class="cabecera">
+  <div class="contenedor cabecera__fila">
+    <a href="#inicio" class="marca">
+      <span class="marca__signo" aria-hidden="true">&lt;/&gt;</span>
+      <span>Informática <span class="marca__sigla">UTEM</span></span>
+    </a>
+    <nav aria-label="Secciones de la página" class="menu">
+      <ul class="menu__lista">
+        {
+          enlaces.map((enlace) => (
+            <li>
+              <a href={enlace.href}>{enlace.texto}</a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+  </div>
+</header>

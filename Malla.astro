@@ -1,0 +1,174 @@
+---
+/**
+ * Malla.astro — ¿Qué aprenderé? (plan de estudios)
+ *
+ * Es el único componente del sitio que envía JavaScript al navegador: un
+ * filtro que muestra las asignaturas de una línea formativa. Es la "isla"
+ * interactiva del proyecto y se justifica en el INFORME (sección 7.3).
+ *
+ * MEJORA PROGRESIVA
+ *   El HTML que llega al navegador ya contiene la malla completa. Los
+ *   botones del filtro nacen ocultos (`hidden`) y el script los muestra.
+ *   Si JavaScript falla o está desactivado, la persona ve toda la malla y
+ *   una leyenda estática; nunca un botón que no funciona.
+ *
+ * TÉCNICA
+ *   Se usa un elemento personalizado (<malla-filtro>), estándar del
+ *   navegador. No se agrega ningún framework: el script pesa menos de
+ *   1 KB. Astro lo compila desde TypeScript y lo empaqueta.
+ */
+import { getCollection } from 'astro:content';
+import Seccion from './Seccion.astro';
+import Cita from './Cita.astro';
+import Etiqueta from './Etiqueta.astro';
+import { NOMBRE_LINEA, ORDEN_LINEAS } from '../lib/formato';
+
+const semestres = (await getCollection('malla')).sort(
+  (a, b) => a.data.semestre - b.data.semestre,
+);
+
+// Total de asignaturas, calculado desde los datos para no escribirlo a mano.
+const totalAsignaturas = semestres.reduce(
+  (suma, semestre) => suma + semestre.data.asignaturas.length,
+  0,
+);
+
+// Todas las entradas citan la misma fuente; se toma la del primer semestre.
+const fuentesMalla = semestres[0]?.data.fuentes ?? [];
+---
+
+<Seccion id="plan" pregunta="¿Qué aprenderé y cómo se organiza?" titulo="Plan de estudios" alterna>
+  <p class="entrada">
+    El plan tiene {semestres.length} semestres y {totalAsignaturas} asignaturas o actividades.
+    <Cita fuentes={fuentesMalla} />
+    Parte con programación desde el primer semestre y termina con la práctica profesional.
+  </p>
+
+  <malla-filtro>
+    <div class="filtro" data-controles hidden>
+      <p id="filtro-titulo" class="filtro__titulo">Mostrar asignaturas de:</p>
+      <div class="filtro__botones" role="group" aria-labelledby="filtro-titulo">
+        <button type="button" class="chip" data-linea="todas" aria-pressed="true">Todas</button>
+        {
+          ORDEN_LINEAS.map((linea) => (
+            <button type="button" class="chip" data-linea={linea} aria-pressed="false">
+              <span class={`punto punto--${linea}`} aria-hidden="true"></span>
+              {NOMBRE_LINEA[linea]}
+            </button>
+          ))
+        }
+      </div>
+    </div>
+
+    <ul class="leyenda" data-leyenda aria-label="Líneas formativas">
+      {
+        ORDEN_LINEAS.map((linea) => (
+          <li>
+            <span class={`punto punto--${linea}`} aria-hidden="true"></span>
+            {NOMBRE_LINEA[linea]}
+          </li>
+        ))
+      }
+    </ul>
+
+    <p class="solo-lectores" role="status" data-estado></p>
+
+    <ol class="malla">
+      {
+        semestres.map((semestre) => (
+          <li class="malla__semestre" data-semestre>
+            <h3 class="malla__titulo">
+              Semestre {semestre.data.semestre}
+              <span class="malla__anio">Año {semestre.data.anio}</span>
+            </h3>
+            <ul class="malla__lista">
+              {semestre.data.asignaturas.map((asignatura) => (
+                <li data-asignatura data-linea={asignatura.linea}>
+                  <span class={`punto punto--${asignatura.linea}`} aria-hidden="true"></span>
+                  <span>
+                    {asignatura.nombre}
+                    <span class="solo-lectores">({NOMBRE_LINEA[asignatura.linea]})</span>
+                  </span>
+                </li>
+              ))}
+            </ul>
+            <p class="malla__vacio" data-vacio hidden>
+              Sin asignaturas de esta línea.
+            </p>
+          </li>
+        ))
+      }
+    </ol>
+  </malla-filtro>
+
+  <div class="nota nota--interpretacion">
+    <Etiqueta tipo="interpretacion" />
+    <p>
+      La agrupación en cinco líneas formativas es nuestra. La malla oficial lista las asignaturas
+      por semestre y no las clasifica así.
+    </p>
+  </div>
+</Seccion>
+
+<script>
+  /**
+   * Isla interactiva: filtro de la malla por línea formativa.
+   *
+   * `customElements.define` registra la etiqueta <malla-filtro>. El
+   * navegador ejecuta `connectedCallback` cuando la encuentra en la página.
+   */
+  class MallaFiltro extends HTMLElement {
+    connectedCallback(): void {
+      const controles = this.querySelector<HTMLElement>('[data-controles]');
+      const leyenda = this.querySelector<HTMLElement>('[data-leyenda]');
+      const estado = this.querySelector<HTMLElement>('[data-estado]');
+      const botones = Array.from(this.querySelectorAll<HTMLButtonElement>('button[data-linea]'));
+      const semestres = Array.from(this.querySelectorAll<HTMLElement>('[data-semestre]'));
+
+      // Si falta alguna pieza, se deja la malla estática tal como está.
+      if (!controles || !leyenda || !estado) return;
+
+      // Con JavaScript activo: se muestran los botones y sobra la leyenda.
+      controles.hidden = false;
+      leyenda.hidden = true;
+
+      const aplicar = (linea: string, nombre: string): void => {
+        let visibles = 0;
+
+        for (const semestre of semestres) {
+          const asignaturas = Array.from(
+            semestre.querySelectorAll<HTMLElement>('[data-asignatura]'),
+          );
+          let visiblesEnSemestre = 0;
+
+          for (const asignatura of asignaturas) {
+            const coincide = linea === 'todas' || asignatura.dataset.linea === linea;
+            asignatura.hidden = !coincide;
+            if (coincide) visiblesEnSemestre += 1;
+          }
+
+          // Mensaje para los semestres que quedan sin asignaturas visibles.
+          const vacio = semestre.querySelector<HTMLElement>('[data-vacio]');
+          if (vacio) vacio.hidden = visiblesEnSemestre > 0;
+          visibles += visiblesEnSemestre;
+        }
+
+        // `aria-pressed` comunica cuál botón está activo sin depender del color.
+        for (const boton of botones) {
+          boton.setAttribute('aria-pressed', String(boton.dataset.linea === linea));
+        }
+
+        // `role="status"` hace que el lector de pantalla anuncie el resultado.
+        estado.textContent = `${nombre}: ${visibles} asignaturas visibles.`;
+      };
+
+      for (const boton of botones) {
+        boton.addEventListener('click', () => {
+          aplicar(boton.dataset.linea ?? 'todas', boton.textContent?.trim() ?? 'Todas');
+        });
+      }
+    }
+  }
+
+  customElements.define('malla-filtro', MallaFiltro);
+</script>

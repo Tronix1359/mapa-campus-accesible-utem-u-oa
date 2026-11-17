@@ -1,0 +1,77 @@
+[
+  {
+    "id": "ingresos",
+    "orden": 1,
+    "pregunta": "¿Cuánto se puede ganar al titularse?",
+    "respuesta": "No publicamos una cifra de ingresos porque no pudimos verificarla en su fuente oficial. La ficha de la carrera informa empleabilidad, pero no ingresos. El dato vigente está en el buscador de Mi Futuro, del Ministerio de Educación.",
+    "fuentes": [
+      "F02"
+    ]
+  },
+  {
+    "id": "trabajo",
+    "orden": 2,
+    "pregunta": "¿En qué puedo trabajar cuando termine?",
+    "respuesta": "Puedes desarrollar software, operar redes de datos, dirigir proyectos informáticos o trabajar en seguridad de la información. Las organizaciones pueden ser públicas, privadas o del tercer sector.",
+    "fuentes": [
+      "F01",
+      "F02"
+    ]
+  },
+  {
+    "id": "empleabilidad",
+    "orden": 3,
+    "pregunta": "¿La carrera tiene buena empleabilidad?",
+    "respuesta": "La ficha oficial 2026 informa 89,6 % de empleabilidad al primer año de titulación y 95,3 % al segundo. La ficha cita al SIES y no indica el año medido.",
+    "fuentes": [
+      "F02"
+    ]
+  },
+  {
+    "id": "futuro",
+    "orden": 4,
+    "pregunta": "¿Seguirá habiendo trabajo si cada vez más gente estudia informática?",
+    "respuesta": "Ninguna fuente oficial que consultamos proyecta la empleabilidad futura de la carrera. Lo que existe es el dato actual: 89,6 % al primer año, según la ficha 2026. Te sugerimos revisar cada año cómo cambia esa cifra en Mi Futuro.",
+    "fuentes": [
+      "F02"
+    ]
+  },
+  {
+    "id": "costo",
+    "orden": 5,
+    "pregunta": "¿Cuánto cuesta y puedo estudiar con gratuidad?",
+    "respuesta": "El arancel anual de referencia 2026 es de $4.763.300 y la matrícula 2026 es de $90.000. La UTEM está adscrita a la gratuidad, que se asigna por criterio socioeconómico mediante el FUAS.",
+    "fuentes": [
+      "F04"
+    ]
+  },
+  {
+    "id": "tipo-universidad",
+    "orden": 6,
+    "pregunta": "¿Qué tipo de universidad es la UTEM y está acreditada?",
+    "respuesta": "Es una universidad estatal, adscrita a la gratuidad. Informó cinco años de acreditación institucional, hasta octubre de 2031. La carrera tiene además una certificación de calidad vigente hasta junio de 2030.",
+    "fuentes": [
+      "F04",
+      "F05",
+      "F01"
+    ]
+  },
+  {
+    "id": "matematica",
+    "orden": 7,
+    "pregunta": "¿Tiene mucha matemática?",
+    "respuesta": "La malla tiene 6 asignaturas de matemática y 3 de física y electricidad, de un total de 38. Todas están en los cuatro primeros semestres. Desde el quinto semestre predominan programación, redes y gestión.",
+    "fuentes": [
+      "F01"
+    ]
+  },
+  {
+    "id": "duracion-titulo",
+    "orden": 8,
+    "pregunta": "¿Cuánto dura la carrera y qué título entrega?",
+    "respuesta": "Dura 8 semestres, en jornada diurna. Entrega el título de Ingeniera o Ingeniero en Informática y el grado de Licenciada o Licenciado en Informática.",
+    "fuentes": [
+      "F01"
+    ]
+  }
+]

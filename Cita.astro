@@ -1,0 +1,28 @@
+---
+/**
+ * Cita.astro — Cita breve enlazada a la sección Referencias
+ *
+ * Recibe las fuentes de un dato y escribe "[F01]" como enlace al ancla
+ * `#ref-F01` de la lista de referencias. Cumple la guía de estilo de la
+ * Fase D: toda cifra o dato va con una cita breve enlazada.
+ *
+ * El texto visible es corto, por eso cada enlace lleva `aria-label`: un
+ * lector de pantalla anuncia "Fuente F01" en lugar de leer corchetes.
+ */
+interface Props {
+  /** Fuentes validadas por el esquema; solo se usa su `id`. */
+  fuentes: ReadonlyArray<{ id: string }>;
+}
+
+const { fuentes } = Astro.props;
+---
+
+<sup class="cita">
+  {
+    fuentes.map((fuente) => (
+      <a href={`#ref-${fuente.id}`} aria-label={`Fuente ${fuente.id}`}>
+        [{fuente.id}]
+      </a>
+    ))
+  }
+</sup>

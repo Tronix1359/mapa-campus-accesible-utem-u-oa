@@ -1,0 +1,104 @@
+[
+  {
+    "id": "s1",
+    "semestre": 1,
+    "anio": 1,
+    "asignaturas": [
+      { "nombre": "Design Thinking", "linea": "integral" },
+      { "nombre": "Introducción a la Matemática para Ingeniería", "linea": "ciencias" },
+      { "nombre": "Introducción a la Ingeniería en Informática", "linea": "integral" },
+      { "nombre": "Algoritmos y Programación", "linea": "programacion" },
+      { "nombre": "Habilidades de Razonamiento Lógico", "linea": "integral" }
+    ],
+    "fuentes": ["F01"]
+  },
+  {
+    "id": "s2",
+    "semestre": 2,
+    "anio": 1,
+    "asignaturas": [
+      { "nombre": "Física General", "linea": "ciencias" },
+      { "nombre": "Cálculo I", "linea": "ciencias" },
+      { "nombre": "Álgebra I", "linea": "ciencias" },
+      { "nombre": "Estructura de Datos", "linea": "programacion" },
+      { "nombre": "Habilidades de Trabajo Académico", "linea": "integral" }
+    ],
+    "fuentes": ["F01"]
+  },
+  {
+    "id": "s3",
+    "semestre": 3,
+    "anio": 2,
+    "asignaturas": [
+      { "nombre": "Electromagnetismo", "linea": "ciencias" },
+      { "nombre": "Cálculo II", "linea": "ciencias" },
+      { "nombre": "Álgebra II", "linea": "ciencias" },
+      { "nombre": "Lenguaje de Programación", "linea": "programacion" },
+      { "nombre": "Bases de Datos", "linea": "programacion" }
+    ],
+    "fuentes": ["F01"]
+  },
+  {
+    "id": "s4",
+    "semestre": 4,
+    "anio": 2,
+    "asignaturas": [
+      { "nombre": "Electrotecnia", "linea": "ciencias" },
+      { "nombre": "Fundamentos de Administración", "linea": "gestion" },
+      { "nombre": "Estadística y Probabilidades", "linea": "ciencias" },
+      { "nombre": "Grafos y Lenguajes Formales", "linea": "programacion" },
+      { "nombre": "Desarrollo Ágil", "linea": "programacion" }
+    ],
+    "fuentes": ["F01"]
+  },
+  {
+    "id": "s5",
+    "semestre": 5,
+    "anio": 3,
+    "asignaturas": [
+      { "nombre": "Ingeniería y Medio Ambiente", "linea": "gestion" },
+      { "nombre": "Fundamentos de Economía", "linea": "gestion" },
+      { "nombre": "Arquitectura de Computadores", "linea": "infraestructura" },
+      { "nombre": "Ingeniería de Software (práctica intermedia)", "linea": "programacion" },
+      { "nombre": "Introducción a la Computación en la Nube", "linea": "infraestructura" }
+    ],
+    "fuentes": ["F01"]
+  },
+  {
+    "id": "s6",
+    "semestre": 6,
+    "anio": 3,
+    "asignaturas": [
+      { "nombre": "Evaluación de Proyectos de Software", "linea": "gestion" },
+      { "nombre": "Fundamentos de Data Science", "linea": "programacion" },
+      { "nombre": "Redes y Comunicación de Datos", "linea": "infraestructura" },
+      { "nombre": "Computación Web y Móvil", "linea": "programacion" },
+      { "nombre": "Electivo de Profundización Profesional I", "linea": "integral" }
+    ],
+    "fuentes": ["F01"]
+  },
+  {
+    "id": "s7",
+    "semestre": 7,
+    "anio": 4,
+    "asignaturas": [
+      { "nombre": "Computación en la Nube", "linea": "infraestructura" },
+      { "nombre": "Gestión de Proyectos Informáticos", "linea": "gestion" },
+      { "nombre": "Ciberseguridad", "linea": "infraestructura" },
+      { "nombre": "Electivo de Profundización Profesional II", "linea": "integral" },
+      { "nombre": "Electivo de Profundización Profesional III", "linea": "integral" }
+    ],
+    "fuentes": ["F01"]
+  },
+  {
+    "id": "s8",
+    "semestre": 8,
+    "anio": 4,
+    "asignaturas": [
+      { "nombre": "Actividad Integradora de Certificación de Grado y Título Profesional", "linea": "integral" },
+      { "nombre": "Práctica Profesional", "linea": "integral" },
+      { "nombre": "Taller de Empleabilidad", "linea": "integral" }
+    ],
+    "fuentes": ["F01"]
+  }
+]

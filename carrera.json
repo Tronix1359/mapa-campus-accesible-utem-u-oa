@@ -1,0 +1,18 @@
+[
+  {
+    "id": "ingenieria-en-informatica",
+    "nombre": "Ingeniería en Informática",
+    "institucion": "Universidad Tecnológica Metropolitana (UTEM)",
+    "lema": "Aprende a construir el software, las redes y los servicios en la nube que usa una organización.",
+    "resumen": "Una carrera universitaria de ocho semestres, en jornada diurna, que se dicta en el Campus Macul, en Ñuñoa, Santiago.",
+    "titulo": "Ingeniera en Informática / Ingeniero en Informática",
+    "grado": "Licenciada en Informática / Licenciado en Informática",
+    "semestres": 8,
+    "creditosSct": 240,
+    "jornada": "Diurna",
+    "codigoDemre": "21030",
+    "campus": "Campus Macul, Av. José Pedro Alessandri 1242, Ñuñoa, Santiago",
+    "fuentes": ["F01"],
+    "fuentesCreditos": ["F03"]
+  }
+]

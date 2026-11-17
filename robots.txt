@@ -1,0 +1,6 @@
+# Sitio público y estático: se permite el rastreo general.
+User-agent: *
+Allow: /
+
+# REEMPLAZAR por la URL real del despliegue (la misma de astro.config.mjs).
+Sitemap: https://example.com/sitemap-index.xml

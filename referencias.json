@@ -1,0 +1,117 @@
+[
+  {
+    "id": "F01",
+    "autor": "Universidad Tecnológica Metropolitana",
+    "fecha": "2026",
+    "titulo": "Ingeniería en Informática",
+    "url": "https://www.utem.cl/carreras/ingenieria-en-informatica/",
+    "tipo": "primaria",
+    "fechaConsulta": "2026-11-16"
+  },
+  {
+    "id": "F02",
+    "autor": "Universidad Tecnológica Metropolitana",
+    "fecha": "2026",
+    "titulo": "Ingeniería en Informática",
+    "descripcion": "Ficha de carrera",
+    "url": "https://www.utem.cl/wp-content/uploads/2026/05/INGENIERIA_EN_INFORMATICA_UTEM.pdf",
+    "tipo": "primaria",
+    "fechaConsulta": "2026-11-16"
+  },
+  {
+    "id": "F03",
+    "autor": "Universidad Tecnológica Metropolitana",
+    "fecha": "2022, 2 de agosto",
+    "titulo": "Resolución Exenta N.° 03102: Aprueba rediseño de la carrera de Ingeniería en Informática (21030), plan regular",
+    "sitio": "UTEM Transparente",
+    "url": "https://transparencia.utem.cl/wp-content/uploads/2022/09/DJ-596-RES3102DE2022-REDISE%C3%91O-CARRERA-INGENIERIA-EN-INFORMATICA-.pdf",
+    "tipo": "primaria",
+    "fechaConsulta": "2026-11-16"
+  },
+  {
+    "id": "F04",
+    "autor": "Universidad Tecnológica Metropolitana",
+    "fecha": "2026",
+    "titulo": "Oferta académica UTEM: Admisión 2027",
+    "descripcion": "Ficha de resumen de carreras y ponderaciones",
+    "url": "https://www.utem.cl/wp-content/uploads/2026/09/Oferta-Academica-UTEM-2027.pdf",
+    "tipo": "primaria",
+    "fechaConsulta": "2026-11-16"
+  },
+  {
+    "id": "F05",
+    "autor": "Universidad Tecnológica Metropolitana",
+    "fecha": "2026, 18 de octubre",
+    "titulo": "UTEM acreditada Nivel Avanzado",
+    "sitio": "Noticias UTEM",
+    "url": "https://noticias.utem.cl/2026/10/18/utem-acreditada-nivel-avanzado/",
+    "tipo": "primaria",
+    "fechaConsulta": "2026-11-16"
+  },
+  {
+    "id": "F06",
+    "autor": "Departamento de Evaluación, Medición y Registro Educacional",
+    "fecha": "2026",
+    "titulo": "Fechas y horarios rendición PAES Regular: Proceso 2027",
+    "sitio": "DEMRE",
+    "url": "https://demre.cl/paes/regular/rendicion/los-dias-de-la-prueba/fechas-horarios",
+    "tipo": "primaria",
+    "fechaConsulta": "2026-11-16"
+  },
+  {
+    "id": "F07",
+    "autor": "Departamento de Evaluación, Medición y Registro Educacional",
+    "fecha": "2026",
+    "titulo": "Preguntas frecuentes: PAES Regular 2026, Proceso de Admisión 2027",
+    "sitio": "DEMRE",
+    "url": "https://demre.cl/mesa-de-ayuda/preguntas-frecuentes-paes-regular",
+    "tipo": "primaria",
+    "fechaConsulta": "2026-11-16"
+  },
+  {
+    "id": "F08",
+    "autor": "Universidad Tecnológica Metropolitana",
+    "fecha": "2026",
+    "titulo": "Ingeniería Civil en Ciencia de Datos",
+    "descripcion": "Ficha de carrera",
+    "url": "https://www.utem.cl/wp-content/uploads/2026/05/INGENIERIA_CIVIL_EN_CIENCIA_DE_DATOS_UTEM.pdf",
+    "tipo": "primaria",
+    "fechaConsulta": "2026-11-16"
+  },
+  {
+    "id": "F09",
+    "autor": "Universidad Tecnológica Metropolitana",
+    "fecha": "2026",
+    "titulo": "Ingeniería Civil en Computación mención Informática",
+    "url": "https://www.utem.cl/carreras/ingenieria-civil-en-computacion-mencion-informatica/",
+    "tipo": "primaria",
+    "fechaConsulta": "2026-11-16"
+  },
+  {
+    "id": "F10",
+    "autor": "Universidad Tecnológica Metropolitana",
+    "fecha": "2026",
+    "titulo": "Admisión Acceso Vía PAES",
+    "url": "https://www.utem.cl/admision/admision-acceso-via-paes/",
+    "tipo": "primaria",
+    "fechaConsulta": "2026-11-16"
+  },
+  {
+    "id": "F11",
+    "autor": "Universidad Tecnológica Metropolitana",
+    "fecha": "2026",
+    "titulo": "Acceso Directo UTEM",
+    "url": "https://accesodirecto.utem.cl/",
+    "tipo": "primaria",
+    "fechaConsulta": "2026-11-16"
+  },
+  {
+    "id": "F12",
+    "autor": "BioBioChile",
+    "fecha": "2026, 12 de noviembre",
+    "titulo": "Admisión a la educación superior 2027: revisa cuándo son las postulaciones y otras fechas clave",
+    "url": "https://www.biobiochile.cl/noticias/servicios/toma-nota/2026/11/12/admision-a-la-educacion-superior-2027-revisa-cuando-son-las-postulaciones-y-otras-fechas-clave.shtml",
+    "tipo": "secundaria",
+    "fechaConsulta": "2026-11-16"
+  }
+]

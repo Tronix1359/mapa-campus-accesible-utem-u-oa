@@ -1,0 +1,37 @@
+---
+/**
+ * Respaldo.astro — ¿Qué garantías hay?
+ *
+ * Cada bloque lleva su etiqueta de tipo: la mayoría son datos
+ * institucionales y uno es una aclaración del equipo. El tipo viene del
+ * contenido (campo `tipo`), no se decide en el componente.
+ */
+import { getCollection } from 'astro:content';
+import Seccion from './Seccion.astro';
+import Cita from './Cita.astro';
+import Etiqueta from './Etiqueta.astro';
+import { porOrden } from '../lib/formato';
+
+const respaldos = (await getCollection('respaldo')).sort(porOrden);
+---
+
+<Seccion id="respaldo" pregunta="¿Qué garantías tiene?" titulo="Respaldo institucional" alterna>
+  <ul class="tarjetas tarjetas--anchas">
+    {
+      respaldos.map((respaldo) => (
+        <li class:list={['tarjeta', `tarjeta--${respaldo.data.tipo}`]}>
+          <Etiqueta tipo={respaldo.data.tipo} />
+          <h3 class="tarjeta__titulo">{respaldo.data.titulo}</h3>
+          <p>
+            {respaldo.data.texto}
+            <Cita fuentes={respaldo.data.fuentes} />
+          </p>
+        </li>
+      ))
+    }
+  </ul>
+  <p class="aviso">
+    Puedes comprobar el estado de acreditación vigente de cualquier universidad en el buscador de
+    la <a href="https://www.cnachile.cl/" rel="noopener noreferrer">Comisión Nacional de Acreditación</a>.
+  </p>
+</Seccion>

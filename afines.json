@@ -1,0 +1,30 @@
+[
+  {
+    "id": "informatica",
+    "nombre": "Ingeniería en Informática",
+    "titulo": "Ingeniera/o en Informática",
+    "grado": "Licenciada/o en Informática",
+    "semestres": 8,
+    "enfoque": "Diseñar, desarrollar e integrar software y sistemas de información. Gestionar redes y recursos computacionales.",
+    "propia": true,
+    "fuentes": ["F01"]
+  },
+  {
+    "id": "civil-computacion",
+    "nombre": "Ingeniería Civil en Computación mención Informática",
+    "titulo": "Ingeniera/o Civil en Computación mención Informática",
+    "grado": "Licenciada/o en Ciencias de la Ingeniería",
+    "semestres": 11,
+    "enfoque": "Formular, planificar, dirigir y evaluar proyectos informáticos, con base en ciencias básicas y ciencias de la ingeniería.",
+    "fuentes": ["F09"]
+  },
+  {
+    "id": "civil-datos",
+    "nombre": "Ingeniería Civil en Ciencia de Datos",
+    "titulo": "Ingeniera/o Civil en Ciencia de Datos",
+    "grado": "Licenciada/o en Ciencias de la Ingeniería",
+    "semestres": 11,
+    "enfoque": "Gestionar datos masivos, dirigir proyectos de ingeniería de datos y desarrollar software sobre grandes volúmenes de información.",
+    "fuentes": ["F08"]
+  }
+]

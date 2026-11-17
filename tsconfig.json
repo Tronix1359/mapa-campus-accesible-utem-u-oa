@@ -1,0 +1,22 @@
+/**
+ * tsconfig.json — Reglas de TypeScript del proyecto
+ *
+ * TypeScript lee este archivo como JSON con comentarios (JSONC).
+ *
+ * `extends: astro/tsconfigs/strict` hereda el modo estricto que mantiene
+ * el equipo de Astro: activa "strict", prohíbe el `any` implícito y trata
+ * null/undefined como tipos aparte. Es el requisito técnico N.° 1 del
+ * encargo ("TypeScript en modo strict, sin any").
+ *
+ * `include` suma `.astro/types.d.ts`, archivo que Astro GENERA con los
+ * tipos de las colecciones de contenido. Gracias a él, el editor conoce
+ * los campos de cada colección definidos en src/content.config.ts.
+ *
+ * `exclude: dist` ignora la carpeta de salida del build: no es código
+ * fuente y revisarla solo produce ruido.
+ */
+{
+  "extends": "astro/tsconfigs/strict",
+  "include": [".astro/types.d.ts", "**/*"],
+  "exclude": ["dist"]
+}

@@ -1,0 +1,34 @@
+---
+/**
+ * Faq.astro — Preguntas frecuentes
+ *
+ * Usa <details>/<summary>, el acordeón nativo de HTML: se abre con clic,
+ * con Enter o con la barra espaciadora y no necesita JavaScript.
+ * Cada pregunta va dentro de un <h3> para que aparezca en el índice de
+ * encabezados que generan los lectores de pantalla.
+ */
+import { getCollection } from 'astro:content';
+import Seccion from './Seccion.astro';
+import Cita from './Cita.astro';
+import { porOrden } from '../lib/formato';
+
+const preguntas = (await getCollection('faq')).sort(porOrden);
+---
+
+<Seccion id="preguntas" pregunta="¿Qué más preguntan quienes postulan?" titulo="Preguntas frecuentes">
+  <div class="faq">
+    {
+      preguntas.map((item) => (
+        <details class="faq__item">
+          <summary>
+            <h3 class="faq__pregunta">{item.data.pregunta}</h3>
+          </summary>
+          <p>
+            {item.data.respuesta}
+            <Cita fuentes={item.data.fuentes} />
+          </p>
+        </details>
+      ))
+    }
+  </div>
+</Seccion>

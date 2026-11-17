@@ -1,0 +1,1038 @@
+/**
+ * styles/global.css — Hoja de estilos del sitio
+ *
+ * ARQUITECTURA POR CAPAS
+ *   1. Tokens de diseño: colores, tipografías y medidas (variables CSS).
+ *   2. Tema oscuro: mismos nombres de token, otros valores.
+ *   3. Base: reinicio mínimo, tipografía y foco de teclado.
+ *   4. Estructura: contenedor, cabecera, secciones y pie.
+ *   5. Componentes: botones, tarjetas, tablas, etiquetas, malla, etc.
+ *   6. Preferencias de la persona: menos movimiento, impresión.
+ *
+ * IDEA CENTRAL
+ *   Los componentes nunca escriben un color directo: usan tokens
+ *   semánticos (--fondo, --texto, --acento). El tema oscuro solo redefine
+ *   los tokens, sin JavaScript, con `prefers-color-scheme`.
+ *
+ * CONTRASTE (WCAG 2.2 AA)
+ *   Todo par texto/fondo se eligió con razón de contraste de 4,5:1 o más.
+ *   El INFORME (anexo técnico) lista los pares y sus valores.
+ *
+ * DISEÑO RESPONSIVO
+ *   Se escribe primero para teléfono (360 px) y se amplía con
+ *   `min-width` en 48rem (768 px) y 64rem (1024 px).
+ */
+
+/* ── 1. Tokens ─────────────────────────────────────────────────────── */
+:root {
+  /* Indica al navegador que el sitio soporta ambos temas (barras, formularios). */
+  color-scheme: light dark;
+
+  --fondo: #f6f7fb;
+  --fondo-alterno: #eceff6;
+  --superficie: #ffffff;
+  --texto: #10182b;
+  --texto-suave: #414b63;
+  --acento: #0b5cad;
+  --acento-fuerte: #084683;
+  --linea: #c3cadb;
+
+  /* Portada: banda oscura fija en ambos temas. */
+  --portada-fondo: #0c1730;
+  --portada-superficie: #14213f;
+  --portada-texto: #f2f5fb;
+  --portada-suave: #c5cee3;
+  --portada-acento: #ffc857;
+  --portada-linea: #33426b;
+
+  /* Etiquetas de tipo de afirmación. */
+  --dato: #0a5f44;
+  --dato-fondo: #e3f4ec;
+  --interpretacion: #7a4300;
+  --interpretacion-fondo: #fdf0d9;
+  --testimonio: #5a2d91;
+  --testimonio-fondo: #efe6fa;
+
+  /* Líneas formativas de la malla. */
+  --linea-programacion: #0b5cad;
+  --linea-infraestructura: #7a2bbf;
+  --linea-ciencias: #0a7a55;
+  --linea-gestion: #b34700;
+  --linea-integral: #5b6478;
+
+  --fuente-texto: 'IBM Plex Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --fuente-mono: 'Share Tech Mono', ui-monospace, 'Cascadia Mono', Menlo, monospace;
+
+  --ancho-maximo: 68rem;
+  --radio: 0.5rem;
+  --espacio-seccion: 3.5rem;
+}
+
+/* ── 2. Tema oscuro ────────────────────────────────────────────────── */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --fondo: #0b1220;
+    --fondo-alterno: #0f182b;
+    --superficie: #151f35;
+    --texto: #e8ecf5;
+    --texto-suave: #b3bdd3;
+    --acento: #8cc0ff;
+    --acento-fuerte: #b9d9ff;
+    --linea: #34415f;
+
+    --dato: #7fe0b8;
+    --dato-fondo: #0f2e25;
+    --interpretacion: #ffcf87;
+    --interpretacion-fondo: #33260f;
+    --testimonio: #d3b6ff;
+    --testimonio-fondo: #2a1d42;
+
+    --linea-programacion: #8cc0ff;
+    --linea-infraestructura: #c9a0ff;
+    --linea-ciencias: #5fd6a8;
+    --linea-gestion: #ffb070;
+    --linea-integral: #aab4cb;
+  }
+}
+
+/* ── 3. Base ───────────────────────────────────────────────────────── */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  /* La cabecera es fija: este margen evita que tape el destino de un ancla
+     o el elemento con foco (WCAG 2.4.11, foco no oculto). */
+  scroll-padding-top: 7.5rem;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--fondo);
+  color: var(--texto);
+  font-family: var(--fuente-texto);
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+h1,
+h2,
+h3,
+h4,
+p,
+ul,
+ol,
+dl,
+dd,
+figure {
+  margin: 0;
+}
+
+ul,
+ol {
+  padding: 0;
+  list-style: none;
+}
+
+a {
+  color: var(--acento);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+}
+
+a:hover {
+  color: var(--acento-fuerte);
+  text-decoration-thickness: 2px;
+}
+
+/* Anillo de foco visible solo con teclado (WCAG 2.4.7). */
+:focus-visible {
+  outline: 3px solid var(--acento);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+/* Oculta visualmente, pero deja el texto disponible para lectores de pantalla. */
+.solo-lectores {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Enlace "Saltar al contenido": aparece al recibir foco (WCAG 2.4.1). */
+.saltar {
+  position: absolute;
+  left: 1rem;
+  top: -4rem;
+  z-index: 100;
+  padding: 0.6rem 1rem;
+  background: var(--portada-fondo);
+  color: var(--portada-texto);
+  font-weight: 600;
+  border-radius: var(--radio);
+}
+
+.saltar:focus {
+  top: 1rem;
+  color: var(--portada-texto);
+  outline-color: var(--portada-acento);
+}
+
+/* ── 4. Estructura ─────────────────────────────────────────────────── */
+.contenedor {
+  width: 100%;
+  max-width: var(--ancho-maximo);
+  margin-inline: auto;
+  padding-inline: 1.25rem;
+}
+
+.cabecera {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: var(--superficie);
+  border-bottom: 1px solid var(--linea);
+}
+
+.cabecera__fila {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  padding-block: 0.6rem;
+}
+
+.marca {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  align-self: flex-start;
+  color: var(--texto);
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.marca__signo {
+  font-family: var(--fuente-mono);
+  color: var(--acento);
+}
+
+.marca__sigla {
+  font-family: var(--fuente-mono);
+  font-weight: 400;
+  color: var(--texto-suave);
+}
+
+.menu {
+  /* Permite que el menú se encoja dentro de la fila y se desplace por dentro. */
+  min-width: 0;
+}
+
+.menu__lista {
+  display: flex;
+  gap: 0.25rem;
+  /* En pantallas angostas el menú se desplaza en horizontal, sin script. */
+  overflow-x: auto;
+  white-space: nowrap;
+  margin-inline: -0.5rem;
+  padding-bottom: 0.15rem;
+}
+
+.menu__lista a {
+  display: block;
+  padding: 0.45rem 0.5rem;
+  color: var(--texto-suave);
+  font-size: 0.9375rem;
+  font-weight: 500;
+  text-decoration: none;
+  border-radius: 0.25rem;
+}
+
+.menu__lista a:hover {
+  color: var(--acento-fuerte);
+  text-decoration: underline;
+}
+
+.menu__lista a:focus-visible {
+  outline-offset: -3px;
+}
+
+.seccion {
+  padding-block: var(--espacio-seccion);
+}
+
+.seccion--alterna {
+  background: var(--fondo-alterno);
+}
+
+.seccion__pregunta {
+  font-family: var(--fuente-mono);
+  font-size: 0.9375rem;
+  color: var(--texto-suave);
+}
+
+.seccion__pregunta::before {
+  content: '// ';
+  color: var(--acento);
+}
+
+.seccion__titulo {
+  margin-top: 0.25rem;
+  margin-bottom: 1.25rem;
+  font-size: clamp(1.75rem, 1.3rem + 2vw, 2.5rem);
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+}
+
+.entrada {
+  max-width: 44rem;
+  margin-bottom: 1.75rem;
+  font-size: 1.0625rem;
+  color: var(--texto-suave);
+}
+
+.subtitulo {
+  margin-top: 2.25rem;
+  margin-bottom: 0.75rem;
+  font-size: 1.25rem;
+  line-height: 1.3;
+}
+
+.pie {
+  padding-block: 2rem;
+  background: var(--portada-fondo);
+  color: var(--portada-suave);
+  font-size: 0.9375rem;
+}
+
+.pie__fila {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.pie a {
+  color: var(--portada-acento);
+}
+
+.pie :focus-visible {
+  outline-color: var(--portada-acento);
+}
+
+/* ── 5. Componentes ────────────────────────────────────────────────── */
+
+/* Portada */
+.portada {
+  padding-block: 2.75rem 3.25rem;
+  background:
+    linear-gradient(var(--portada-linea) 1px, transparent 1px) 0 0 / 100% 2.5rem,
+    var(--portada-fondo);
+  background-blend-mode: soft-light;
+  color: var(--portada-texto);
+}
+
+.portada :focus-visible {
+  outline-color: var(--portada-acento);
+}
+
+.portada__grilla {
+  display: grid;
+  gap: 2rem;
+}
+
+.portada__institucion {
+  font-family: var(--fuente-mono);
+  font-size: 0.9375rem;
+  color: var(--portada-acento);
+}
+
+.portada__titulo {
+  margin-top: 0.5rem;
+  font-size: clamp(2.25rem, 1.4rem + 4.2vw, 4rem);
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+}
+
+.portada__lema {
+  margin-top: 1rem;
+  max-width: 34rem;
+  font-size: clamp(1.125rem, 1rem + 0.6vw, 1.375rem);
+  line-height: 1.4;
+}
+
+.portada__resumen {
+  margin-top: 0.75rem;
+  max-width: 34rem;
+  color: var(--portada-suave);
+}
+
+.portada a:not(.boton) {
+  color: var(--portada-acento);
+}
+
+.portada__acciones {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 1.5rem;
+}
+
+.boton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 2.75rem;
+  padding: 0.6rem 1.15rem;
+  font-weight: 600;
+  text-decoration: none;
+  border: 2px solid transparent;
+  border-radius: var(--radio);
+}
+
+.boton--primario {
+  background: var(--portada-acento);
+  color: #1b1400;
+}
+
+.boton--primario:hover {
+  background: #ffd98a;
+  color: #1b1400;
+}
+
+.boton--secundario {
+  border-color: var(--portada-suave);
+  color: var(--portada-texto);
+}
+
+.boton--secundario:hover {
+  border-color: var(--portada-acento);
+  color: var(--portada-acento);
+}
+
+/* Ficha de datos de la portada, con aspecto de archivo de código. */
+.ficha {
+  background: var(--portada-superficie);
+  border: 1px solid var(--portada-linea);
+  border-radius: var(--radio);
+  overflow: hidden;
+}
+
+.ficha__barra {
+  padding: 0.45rem 1rem;
+  font-family: var(--fuente-mono);
+  font-size: 0.875rem;
+  color: var(--portada-suave);
+  border-bottom: 1px solid var(--portada-linea);
+}
+
+.ficha__lista {
+  padding: 0.5rem 1rem;
+}
+
+.ficha__fila {
+  padding-block: 0.55rem;
+  border-bottom: 1px dashed var(--portada-linea);
+}
+
+.ficha__fila:last-child {
+  border-bottom: 0;
+}
+
+.ficha__fila dt {
+  font-family: var(--fuente-mono);
+  font-size: 0.875rem;
+  color: var(--portada-acento);
+}
+
+.ficha__fila dd {
+  font-weight: 500;
+}
+
+.ficha__pie {
+  padding: 0.6rem 1rem 0.8rem;
+  font-size: 0.8125rem;
+  color: var(--portada-suave);
+  border-top: 1px solid var(--portada-linea);
+}
+
+/* Cita breve [F01] */
+.cita {
+  font-size: 0.75em;
+  line-height: 0;
+  white-space: nowrap;
+}
+
+.cita a {
+  padding: 0.15em 0.1em;
+  font-family: var(--fuente-mono);
+  text-decoration: none;
+}
+
+.cita a:hover {
+  text-decoration: underline;
+}
+
+/* Etiqueta de tipo de afirmación */
+.etiqueta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.15rem 0.6rem;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  border: 1px solid currentColor;
+  border-radius: 999px;
+}
+
+.etiqueta--dato {
+  color: var(--dato);
+  background: var(--dato-fondo);
+}
+
+.etiqueta--interpretacion {
+  color: var(--interpretacion);
+  background: var(--interpretacion-fondo);
+}
+
+.etiqueta--testimonio {
+  color: var(--testimonio);
+  background: var(--testimonio-fondo);
+}
+
+/* Bloque de interpretación del equipo */
+.nota {
+  display: grid;
+  gap: 0.6rem;
+  justify-items: start;
+  max-width: 46rem;
+  margin-top: 1.75rem;
+  padding: 1rem 1.15rem;
+  background: var(--superficie);
+  border: 1px solid var(--linea);
+  border-left: 4px solid var(--interpretacion);
+  border-radius: var(--radio);
+}
+
+.aviso {
+  max-width: 46rem;
+  margin-top: 1.25rem;
+  font-size: 0.9375rem;
+  color: var(--texto-suave);
+}
+
+/* Tarjetas */
+.tarjetas {
+  display: grid;
+  gap: 1rem;
+}
+
+.tarjeta {
+  display: grid;
+  gap: 0.5rem;
+  align-content: start;
+  justify-items: start;
+  padding: 1.15rem;
+  background: var(--superficie);
+  border: 1px solid var(--linea);
+  border-radius: var(--radio);
+}
+
+.tarjeta__titulo {
+  font-size: 1.125rem;
+  line-height: 1.3;
+}
+
+.tarjeta--interpretacion {
+  border-left: 4px solid var(--interpretacion);
+}
+
+/* Numeración de las competencias con contador CSS. */
+.tarjetas--numeradas {
+  counter-reset: competencia;
+}
+
+.tarjetas--numeradas .tarjeta {
+  counter-increment: competencia;
+}
+
+.tarjetas--numeradas .tarjeta__titulo::before {
+  content: '0' counter(competencia) ' ';
+  font-family: var(--fuente-mono);
+  font-weight: 400;
+  color: var(--acento);
+}
+
+/* Tablas */
+.tabla-envoltorio {
+  /* Si la tabla no cabe, se desplaza ella y no toda la página. */
+  overflow-x: auto;
+  background: var(--superficie);
+  border: 1px solid var(--linea);
+  border-radius: var(--radio);
+}
+
+.tabla {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9375rem;
+}
+
+.tabla caption {
+  padding: 0.85rem 1rem;
+  text-align: left;
+  font-weight: 600;
+  border-bottom: 1px solid var(--linea);
+}
+
+.tabla th,
+.tabla td {
+  padding: 0.75rem 1rem;
+  text-align: left;
+  vertical-align: top;
+  border-bottom: 1px solid var(--linea);
+}
+
+.tabla tbody tr:last-child th,
+.tabla tbody tr:last-child td {
+  border-bottom: 0;
+}
+
+.tabla thead th {
+  font-family: var(--fuente-mono);
+  font-size: 0.875rem;
+  font-weight: 400;
+  color: var(--texto-suave);
+}
+
+.tabla tbody th {
+  min-width: 11rem;
+  font-weight: 600;
+}
+
+.tabla__fila--propia th,
+.tabla__fila--propia td {
+  background: var(--fondo-alterno);
+}
+
+.tabla__fila--propia th {
+  box-shadow: inset 4px 0 0 var(--acento);
+}
+
+.tabla--ponderaciones td {
+  white-space: nowrap;
+  font-weight: 600;
+}
+
+.barra {
+  display: inline-block;
+  width: 5rem;
+  height: 0.6rem;
+  margin-right: 0.6rem;
+  vertical-align: middle;
+  background: var(--fondo-alterno);
+  border: 1px solid var(--linea);
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.barra__relleno {
+  display: block;
+  height: 100%;
+  background: var(--acento);
+}
+
+/* Cifras con período y fuente */
+.cifras {
+  display: grid;
+  gap: 1rem;
+  margin-top: 0.85rem;
+}
+
+.cifra {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  padding: 1.15rem;
+  background: var(--superficie);
+  border: 1px solid var(--linea);
+  border-radius: var(--radio);
+}
+
+.cifra dt {
+  font-weight: 600;
+}
+
+.cifra__valor {
+  font-size: 2.25rem;
+  font-weight: 700;
+  line-height: 1.1;
+  color: var(--acento);
+}
+
+.cifras--compactas .cifra__valor {
+  font-size: 1.625rem;
+}
+
+.cifra__periodo,
+.cifra__nota {
+  display: block;
+  font-size: 0.875rem;
+  color: var(--texto-suave);
+}
+
+.cifra__periodo {
+  font-family: var(--fuente-mono);
+}
+
+/* Malla curricular */
+
+/* Un elemento personalizado es "en línea" por defecto; aquí contiene bloques. */
+malla-filtro {
+  display: block;
+}
+
+.filtro {
+  margin-bottom: 1.25rem;
+}
+
+.filtro__titulo {
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+}
+
+.filtro__botones,
+.leyenda {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.leyenda {
+  margin-bottom: 1.25rem;
+  font-size: 0.9375rem;
+  color: var(--texto-suave);
+}
+
+.leyenda li {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin-right: 0.5rem;
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  min-height: 2.5rem;
+  padding: 0.35rem 0.85rem;
+  font: inherit;
+  font-size: 0.9375rem;
+  color: var(--texto);
+  background: var(--superficie);
+  /* Borde con contraste 3:1 o más: delimita el botón (WCAG 1.4.11). */
+  border: 1px solid var(--texto-suave);
+  border-radius: 999px;
+  cursor: pointer;
+}
+
+.chip:hover {
+  border-color: var(--acento);
+}
+
+/* El estado activo cambia borde, peso y fondo: no depende solo del color. */
+.chip[aria-pressed='true'] {
+  font-weight: 700;
+  background: var(--fondo-alterno);
+  border: 2px solid var(--acento);
+}
+
+.punto {
+  flex: none;
+  display: inline-block;
+  width: 0.7rem;
+  height: 0.7rem;
+  border-radius: 2px;
+}
+
+.punto--programacion {
+  background: var(--linea-programacion);
+}
+
+.punto--infraestructura {
+  background: var(--linea-infraestructura);
+  border-radius: 50%;
+}
+
+.punto--ciencias {
+  background: var(--linea-ciencias);
+  transform: rotate(45deg);
+}
+
+.punto--gestion {
+  background: var(--linea-gestion);
+  border-radius: 50% 50% 0 0;
+}
+
+.punto--integral {
+  background: transparent;
+  border: 2px solid var(--linea-integral);
+}
+
+.malla {
+  display: grid;
+  gap: 1rem;
+}
+
+.malla__semestre {
+  padding: 1rem 1.15rem;
+  background: var(--superficie);
+  border: 1px solid var(--linea);
+  border-radius: var(--radio);
+}
+
+.malla__titulo {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.5rem;
+  padding-bottom: 0.5rem;
+  margin-bottom: 0.6rem;
+  font-size: 1.0625rem;
+  border-bottom: 1px solid var(--linea);
+}
+
+.malla__anio {
+  font-family: var(--fuente-mono);
+  font-size: 0.8125rem;
+  font-weight: 400;
+  color: var(--texto-suave);
+}
+
+.malla__lista {
+  display: grid;
+  gap: 0.5rem;
+  font-size: 0.9375rem;
+  line-height: 1.4;
+}
+
+.malla__lista li {
+  display: flex;
+  align-items: baseline;
+  gap: 0.55rem;
+}
+
+/* `hidden` debe ganar a `display: flex` cuando el filtro oculta un ítem. */
+.malla__lista li[hidden] {
+  display: none;
+}
+
+.malla__vacio {
+  font-size: 0.875rem;
+  color: var(--texto-suave);
+}
+
+/* Línea de tiempo de fechas */
+.linea-tiempo {
+  display: grid;
+  gap: 0;
+  max-width: 46rem;
+  border-left: 2px solid var(--acento);
+}
+
+.linea-tiempo li {
+  display: grid;
+  gap: 0.15rem;
+  padding: 0.65rem 0 0.65rem 1.15rem;
+  position: relative;
+}
+
+.linea-tiempo li::before {
+  content: '';
+  position: absolute;
+  left: -0.45rem;
+  top: 1.1rem;
+  width: 0.75rem;
+  height: 0.75rem;
+  background: var(--fondo-alterno);
+  border: 2px solid var(--acento);
+  border-radius: 50%;
+}
+
+.linea-tiempo__cuando {
+  font-family: var(--fuente-mono);
+  font-size: 0.9375rem;
+  color: var(--texto-suave);
+}
+
+/* Preguntas frecuentes */
+.faq {
+  display: grid;
+  gap: 0.6rem;
+  max-width: 46rem;
+}
+
+.faq__item {
+  background: var(--superficie);
+  border: 1px solid var(--linea);
+  border-radius: var(--radio);
+}
+
+.faq__item summary {
+  padding: 0.9rem 1.15rem;
+  cursor: pointer;
+}
+
+.faq__item summary:focus-visible {
+  outline-offset: -3px;
+}
+
+.faq__pregunta {
+  display: inline;
+  font-size: 1.0625rem;
+  line-height: 1.4;
+}
+
+.faq__item > p {
+  padding: 0 1.15rem 1.1rem;
+}
+
+/* Referencias */
+.referencias {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.referencia {
+  display: grid;
+  gap: 0.35rem;
+  justify-items: start;
+  padding: 0.9rem 1.15rem;
+  background: var(--superficie);
+  border: 1px solid var(--linea);
+  border-radius: var(--radio);
+  font-size: 0.9375rem;
+}
+
+/* Resalta la referencia a la que llegó la persona desde una cita. */
+.referencia:target {
+  border: 2px solid var(--acento);
+}
+
+.referencia__id {
+  font-family: var(--fuente-mono);
+  font-weight: 400;
+  color: var(--acento);
+}
+
+.referencia__texto {
+  /* Las URL largas se cortan en vez de desbordar la página en 360 px. */
+  overflow-wrap: anywhere;
+}
+
+.referencia__tipo {
+  font-family: var(--fuente-mono);
+  font-size: 0.8125rem;
+  color: var(--texto-suave);
+}
+
+/* ── Desde 768 px ──────────────────────────────────────────────────── */
+@media (min-width: 48rem) {
+  :root {
+    --espacio-seccion: 5rem;
+  }
+
+  html {
+    scroll-padding-top: 5rem;
+  }
+
+  .contenedor {
+    padding-inline: 2rem;
+  }
+
+  .cabecera__fila {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.5rem;
+  }
+
+  .marca {
+    align-self: center;
+    flex: none;
+  }
+
+  .menu__lista {
+    margin-inline: 0;
+    padding-bottom: 0;
+  }
+
+  .tarjetas,
+  .cifras,
+  .malla {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .portada {
+    padding-block: 4rem 4.5rem;
+  }
+
+  .linea-tiempo li {
+    grid-template-columns: 15rem 1fr;
+    gap: 1rem;
+    align-items: baseline;
+  }
+
+  .referencia {
+    grid-template-columns: 3rem 1fr auto;
+    gap: 1rem;
+    align-items: baseline;
+  }
+}
+
+/* ── Desde 1024 px ─────────────────────────────────────────────────── */
+@media (min-width: 64rem) {
+  .portada__grilla {
+    grid-template-columns: 1.25fr 1fr;
+    gap: 3.5rem;
+    align-items: center;
+  }
+
+  .tarjetas {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .tarjetas--anchas {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .cifras--compactas,
+  .malla {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+/* ── 6. Preferencias de la persona ─────────────────────────────────── */
+
+/* Desplazamiento suave solo si la persona no pidió reducir el movimiento. */
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+/* Impresión: sin cabecera fija, sin filtro y sin botones. */
+@media print {
+  .cabecera,
+  .filtro,
+  .portada__acciones {
+    display: none;
+  }
+}

@@ -1,0 +1,118 @@
+---
+/**
+ * Admision.astro — ¿Cómo postulo?
+ *
+ * Tres bloques: vías de ingreso, ponderaciones y fechas clave. Las
+ * ponderaciones van en una tabla con una barra proporcional. La barra es
+ * decorativa (`aria-hidden`): el porcentaje ya está escrito como texto.
+ *
+ * Antes de mostrar la tabla se comprueba que las ponderaciones sumen 100.
+ * Si alguien edita mal el JSON, el build falla en vez de publicar una
+ * tabla incoherente.
+ */
+import { getCollection } from 'astro:content';
+import Seccion from './Seccion.astro';
+import Cita from './Cita.astro';
+import { porOrden } from '../lib/formato';
+
+const vias = (await getCollection('vias')).sort(porOrden);
+const ponderaciones = (await getCollection('ponderaciones')).sort(porOrden);
+const datos = (await getCollection('indicadores', ({ data }) => data.grupo === 'admision')).sort(
+  porOrden,
+);
+// Las fechas en formato AAAA-MM-DD se ordenan bien como texto.
+const fechas = (await getCollection('fechas')).sort((a, b) =>
+  a.data.inicio.localeCompare(b.data.inicio),
+);
+
+const suma = ponderaciones.reduce((total, fila) => total + fila.data.porcentaje, 0);
+if (suma !== 100) {
+  throw new Error(`Las ponderaciones deben sumar 100 y suman ${suma}. Revisa ponderaciones.json`);
+}
+---
+
+<Seccion id="admision" pregunta="¿Cómo postulo y qué necesito?" titulo="Admisión">
+  <h3 class="subtitulo">Vías de ingreso</h3>
+  <ul class="tarjetas tarjetas--anchas">
+    {
+      vias.map((via) => (
+        <li class="tarjeta">
+          <h4 class="tarjeta__titulo">{via.data.nombre}</h4>
+          <p>
+            {via.data.descripcion}
+            <Cita fuentes={via.data.fuentes} />
+          </p>
+          <p>
+            <a href={via.data.enlace} rel="noopener noreferrer">{via.data.textoEnlace}</a>
+          </p>
+        </li>
+      ))
+    }
+  </ul>
+
+  <h3 class="subtitulo">Ponderaciones para la Admisión 2027</h3>
+  <div class="tabla-envoltorio" role="region" aria-labelledby="tabla-ponderaciones-titulo" tabindex="0">
+    <table class="tabla tabla--ponderaciones">
+      <caption id="tabla-ponderaciones-titulo">
+        Peso de cada factor en el puntaje de postulación
+        <Cita fuentes={ponderaciones[0]?.data.fuentes ?? []} />
+      </caption>
+      <thead>
+        <tr>
+          <th scope="col">Factor</th>
+          <th scope="col">Peso</th>
+        </tr>
+      </thead>
+      <tbody>
+        {
+          ponderaciones.map((fila) => (
+            <tr>
+              <th scope="row">{fila.data.factor}</th>
+              <td>
+                <span class="barra" aria-hidden="true">
+                  <span class="barra__relleno" style={`width: ${fila.data.porcentaje * 3}%`}></span>
+                </span>
+                {fila.data.porcentaje} %
+              </td>
+            </tr>
+          ))
+        }
+      </tbody>
+    </table>
+  </div>
+
+  <dl class="cifras cifras--compactas">
+    {
+      datos.map((dato) => (
+        <div class="cifra">
+          <dt>{dato.data.etiqueta}</dt>
+          <dd>
+            <span class="cifra__valor">{dato.data.valor}</span>
+            <Cita fuentes={dato.data.fuentes} />
+            <span class="cifra__periodo">{dato.data.periodo}</span>
+            {dato.data.nota && <span class="cifra__nota">{dato.data.nota}</span>}
+          </dd>
+        </div>
+      ))
+    }
+  </dl>
+
+  <h3 class="subtitulo">Fechas clave</h3>
+  <ol class="linea-tiempo">
+    {
+      fechas.map((fecha) => (
+        <li>
+          <span class="linea-tiempo__cuando">{fecha.data.cuando}</span>
+          <span>
+            {fecha.data.hito}
+            <Cita fuentes={fecha.data.fuentes} />
+          </span>
+        </li>
+      ))
+    }
+  </ol>
+  <p class="aviso">
+    El DEMRE puede modificar el calendario. Confirma las fechas en
+    <a href="https://demre.cl/" rel="noopener noreferrer">demre.cl</a> antes de postular.
+  </p>
+</Seccion>

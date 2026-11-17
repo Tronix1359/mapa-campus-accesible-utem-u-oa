@@ -1,0 +1,65 @@
+---
+/**
+ * CampoLaboral.astro — ¿Dónde trabajaré?
+ *
+ * Dos bloques: las áreas de desempeño que declara la universidad y las
+ * cifras de empleabilidad. Cada cifra muestra su período y su fuente; el
+ * esquema impide publicar una cifra sin esos dos campos.
+ */
+import { getCollection } from 'astro:content';
+import Seccion from './Seccion.astro';
+import Cita from './Cita.astro';
+import Etiqueta from './Etiqueta.astro';
+import { porOrden } from '../lib/formato';
+
+const areas = (await getCollection('campoLaboral')).sort(porOrden);
+// El segundo argumento filtra: solo los indicadores del grupo "empleo".
+const cifras = (await getCollection('indicadores', ({ data }) => data.grupo === 'empleo')).sort(
+  porOrden,
+);
+---
+
+<Seccion id="campo" pregunta="¿Dónde trabajaré?" titulo="Campo laboral" alterna>
+  <p class="entrada">
+    Quienes se titulan pueden trabajar en organizaciones públicas, privadas y del tercer sector
+    (fundaciones y organizaciones sin fines de lucro).
+    <Cita fuentes={areas[0]?.data.fuentes ?? []} />
+  </p>
+
+  <ul class="tarjetas">
+    {
+      areas.map((area) => (
+        <li class="tarjeta">
+          <h3 class="tarjeta__titulo">{area.data.titulo}</h3>
+          <p>
+            {area.data.descripcion}
+            <Cita fuentes={area.data.fuentes} />
+          </p>
+        </li>
+      ))
+    }
+  </ul>
+
+  <h3 class="subtitulo">Empleabilidad</h3>
+  <Etiqueta tipo="dato" />
+  <dl class="cifras">
+    {
+      cifras.map((cifra) => (
+        <div class="cifra">
+          <dt>{cifra.data.etiqueta}</dt>
+          <dd>
+            <span class="cifra__valor">{cifra.data.valor}</span>
+            <Cita fuentes={cifra.data.fuentes} />
+            <span class="cifra__periodo">{cifra.data.periodo}</span>
+            {cifra.data.nota && <span class="cifra__nota">{cifra.data.nota}</span>}
+          </dd>
+        </div>
+      ))
+    }
+  </dl>
+  <p class="aviso">
+    Los ingresos de los titulados cambian cada año. Revisa la cifra vigente de esta carrera en el
+    buscador de empleabilidad e ingresos de
+    <a href="https://www.mifuturo.cl/" rel="noopener noreferrer">Mi Futuro, del Ministerio de Educación</a>.
+  </p>
+</Seccion>

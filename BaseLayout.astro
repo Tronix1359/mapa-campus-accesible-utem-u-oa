@@ -1,0 +1,113 @@
+---
+/**
+ * src/layouts/BaseLayout.astro — Layout base del sitio
+ *
+ * ROL
+ *   Concentra lo que es común a cualquier página: <head>, metadatos de
+ *   SEO, tipografías, estilos globales, cabecera y pie. La página que lo
+ *   usa solo aporta el contenido que va dentro de <main> (el <slot />).
+ *
+ * MODELO DE EJECUCIÓN
+ *   El bloque inicial de este archivo (el "frontmatter") se ejecuta durante el build, en Node.
+ *   El resultado es HTML estático. Este layout no envía JavaScript al
+ *   navegador.
+ */
+
+// Tipografías autohospedadas: no se pide nada a servidores de terceros.
+// Solo se cargan los pesos que el diseño usa.
+import '@fontsource/ibm-plex-sans/latin-400.css';
+import '@fontsource/ibm-plex-sans/latin-500.css';
+import '@fontsource/ibm-plex-sans/latin-600.css';
+import '@fontsource/ibm-plex-sans/latin-700.css';
+import '@fontsource/share-tech-mono/latin-400.css';
+// Estilos globales: se importan una sola vez, aquí.
+import '../styles/global.css';
+
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+
+interface Props {
+  /** Título único de la página: pestaña del navegador y resultado de búsqueda. */
+  title: string;
+  /** Descripción única: texto bajo el título en los buscadores. */
+  description: string;
+}
+
+const { title, description } = Astro.props;
+
+// `Astro.site` viene de astro.config.mjs. Si faltara, el build se detiene:
+// sin dominio no se pueden construir la URL canónica ni las de Open Graph.
+if (!Astro.site) {
+  throw new Error('Falta la opción "site" en astro.config.mjs');
+}
+
+// BASE_URL es "/" o "/nombre-repo/" (GitHub Pages). Se usa para que los
+// archivos de public/ se encuentren en cualquier tipo de despliegue.
+const base: string = import.meta.env.BASE_URL.replace(/\/$/, '');
+
+// URL absolutas: los rastreadores de redes sociales no aceptan rutas relativas.
+const urlCanonica: string = new URL(Astro.url.pathname, Astro.site).href;
+const urlImagen: string = new URL(`${base}/og.png`, Astro.site).href;
+
+// Datos estructurados (schema.org): describen la carrera a los buscadores.
+const datosEstructurados = {
+  '@context': 'https://schema.org',
+  '@type': 'EducationalOccupationalProgram',
+  name: 'Ingeniería en Informática',
+  description,
+  url: urlCanonica,
+  inLanguage: 'es-CL',
+  timeToComplete: 'P4Y',
+  educationalCredentialAwarded: 'Ingeniera en Informática / Ingeniero en Informática',
+  provider: {
+    '@type': 'CollegeOrUniversity',
+    name: 'Universidad Tecnológica Metropolitana',
+    url: 'https://www.utem.cl/',
+  },
+};
+
+// `<` se reemplaza por su código Unicode: así ningún texto puede cerrar la
+// etiqueta <script> antes de tiempo (medida estándar contra inyección).
+const jsonLd: string = JSON.stringify(datosEstructurados).replace(/</g, '\\u003c');
+---
+
+<!doctype html>
+<html lang="es-CL">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" type="image/svg+xml" href={`${base}/favicon.svg`} />
+
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={urlCanonica} />
+    <link rel="sitemap" href={`${base}/sitemap-index.xml`} />
+
+    {/* Open Graph: cómo se ve el enlace al compartirlo en redes sociales. */}
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="es_CL" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={urlCanonica} />
+    <meta property="og:image" content={urlImagen} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Ingeniería en Informática, UTEM: 8 semestres, jornada diurna, código DEMRE 21030." />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    {/* Colores de la barra del navegador en cada tema. */}
+    <meta name="theme-color" content="#0c1730" />
+
+    <script is:inline type="application/ld+json" set:html={jsonLd} />
+  </head>
+
+  <body>
+    {/* Primer elemento enfocable: permite saltarse el menú con el teclado. */}
+    <a href="#contenido" class="saltar">Saltar al contenido</a>
+    <Header />
+    <main id="contenido" tabindex="-1">
+      <slot />
+    </main>
+    <Footer />
+  </body>
+</html>

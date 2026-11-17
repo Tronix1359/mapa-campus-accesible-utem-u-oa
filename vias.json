@@ -1,0 +1,20 @@
+[
+  {
+    "id": "paes",
+    "orden": 1,
+    "nombre": "Admisión regular con PAES",
+    "descripcion": "Rindes la Prueba de Acceso a la Educación Superior (PAES) y postulas en el portal del DEMRE. El código de la carrera es 21030.",
+    "enlace": "https://www.utem.cl/admision/admision-acceso-via-paes/",
+    "textoEnlace": "Ver requisitos de la admisión con PAES en utem.cl",
+    "fuentes": ["F10", "F01"]
+  },
+  {
+    "id": "acceso-directo",
+    "orden": 2,
+    "nombre": "Acceso Directo UTEM",
+    "descripcion": "Es un sistema de admisión propio de la universidad, distinto del ingreso con PAES. Está pensado para personas con talentos diversos o en situaciones especiales.",
+    "enlace": "https://accesodirecto.utem.cl/",
+    "textoEnlace": "Ver cupos y requisitos de Acceso Directo",
+    "fuentes": ["F11"]
+  }
+]

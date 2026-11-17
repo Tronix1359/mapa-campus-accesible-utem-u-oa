@@ -1,0 +1,81 @@
+---
+/**
+ * Hero.astro — Portada: ¿qué es la carrera?
+ *
+ * Contenido mínimo exigido: nombre oficial, título y grado, duración,
+ * jornada y llamado a la acción. Todos los datos salen de la colección
+ * `carrera` (src/content/carrera.json); aquí no hay textos de contenido
+ * escritos a mano.
+ *
+ * `getEntry` devuelve `undefined` si la entrada no existe. Se lanza un
+ * error explícito para que el build falle con un mensaje claro en lugar
+ * de publicar una portada vacía.
+ */
+import { getEntry } from 'astro:content';
+import Cita from './Cita.astro';
+
+const entrada = await getEntry('carrera', 'ingenieria-en-informatica');
+if (!entrada) {
+  throw new Error('Falta la entrada "ingenieria-en-informatica" en src/content/carrera.json');
+}
+const carrera = entrada.data;
+
+/** Pares etiqueta-valor de la ficha; se muestran como lista de definición. */
+interface DatoFicha {
+  etiqueta: string;
+  valor: string;
+  fuentes: ReadonlyArray<{ id: string }>;
+}
+
+const ficha: readonly DatoFicha[] = [
+  { etiqueta: 'Título profesional', valor: carrera.titulo, fuentes: carrera.fuentes },
+  { etiqueta: 'Grado académico', valor: carrera.grado, fuentes: carrera.fuentes },
+  { etiqueta: 'Duración', valor: `${carrera.semestres} semestres`, fuentes: carrera.fuentes },
+  {
+    etiqueta: 'Carga total',
+    valor: `${carrera.creditosSct} créditos SCT`,
+    fuentes: carrera.fuentesCreditos,
+  },
+  { etiqueta: 'Jornada', valor: carrera.jornada, fuentes: carrera.fuentes },
+  { etiqueta: 'Código DEMRE', valor: carrera.codigoDemre, fuentes: carrera.fuentes },
+];
+---
+
+<section id="inicio" class="portada" aria-labelledby="inicio-titulo">
+  <div class="contenedor portada__grilla">
+    <div class="portada__texto">
+      <p class="portada__institucion">{carrera.institucion}</p>
+      <h1 id="inicio-titulo" class="portada__titulo">{carrera.nombre}</h1>
+      <p class="portada__lema">{carrera.lema}</p>
+      <p class="portada__resumen">
+        {carrera.resumen}
+        <Cita fuentes={carrera.fuentes} />
+      </p>
+      <div class="portada__acciones">
+        <a href="#admision" class="boton boton--primario">Cómo postular</a>
+        <a href="#campo" class="boton boton--secundario">Dónde se trabaja</a>
+      </div>
+    </div>
+
+    <div class="ficha">
+      <p class="ficha__barra" aria-hidden="true">carrera.json</p>
+      <dl class="ficha__lista">
+        {
+          ficha.map((dato) => (
+            <div class="ficha__fila">
+              <dt>{dato.etiqueta}</dt>
+              <dd>
+                {dato.valor}
+                <Cita fuentes={dato.fuentes} />
+              </dd>
+            </div>
+          ))
+        }
+      </dl>
+      <p class="ficha__pie">
+        SCT: Sistema de Créditos Transferibles. DEMRE: Departamento de Evaluación, Medición y
+        Registro Educacional.
+      </p>
+    </div>
+  </div>
+</section>

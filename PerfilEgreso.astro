@@ -1,0 +1,36 @@
+---
+/**
+ * PerfilEgreso.astro — ¿Qué podré hacer?
+ *
+ * Muestra las competencias del perfil de egreso oficial, reescritas en
+ * lenguaje claro (oraciones cortas, voz activa, segunda persona). Cada
+ * competencia conserva la cita a la fuente oficial de la que se resumió.
+ * Va después de Campo laboral: ambas responden "qué haré al egresar".
+ */
+import { getCollection } from 'astro:content';
+import Seccion from './Seccion.astro';
+import Cita from './Cita.astro';
+import { porOrden } from '../lib/formato';
+
+const competencias = (await getCollection('perfil')).sort(porOrden);
+---
+
+<Seccion id="perfil" pregunta="¿Qué podré hacer al terminar?" titulo="Perfil de egreso">
+  <p class="entrada">
+    El perfil de egreso es la declaración oficial de lo que sabrás hacer al titularte. Lo
+    resumimos en cinco capacidades.
+  </p>
+  <ol class="tarjetas tarjetas--numeradas">
+    {
+      competencias.map((competencia) => (
+        <li class="tarjeta">
+          <h3 class="tarjeta__titulo">{competencia.data.titulo}</h3>
+          <p>
+            {competencia.data.descripcion}
+            <Cita fuentes={competencia.data.fuentes} />
+          </p>
+        </li>
+      ))
+    }
+  </ol>
+</Seccion>

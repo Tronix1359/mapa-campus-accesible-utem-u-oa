@@ -1,0 +1,37 @@
+[
+  {
+    "id": "software",
+    "orden": 1,
+    "titulo": "Crear software",
+    "descripcion": "Diseñas y desarrollas programas y sistemas de información para resolver una necesidad concreta de una organización.",
+    "fuentes": ["F01"]
+  },
+  {
+    "id": "integracion",
+    "orden": 2,
+    "titulo": "Integrar tecnologías",
+    "descripcion": "Conectas distintas piezas de software para que trabajen juntas, cuidando la seguridad y la calidad del resultado.",
+    "fuentes": ["F01", "F02"]
+  },
+  {
+    "id": "redes",
+    "orden": 3,
+    "titulo": "Gestionar redes y equipos",
+    "descripcion": "Organizas las redes y los recursos computacionales que permiten que los datos viajen de un lugar a otro.",
+    "fuentes": ["F01", "F02"]
+  },
+  {
+    "id": "administracion",
+    "orden": 4,
+    "titulo": "Administrar la tecnología",
+    "descripcion": "Evalúas cómo rinden los recursos tecnológicos de una organización y decides cómo mejorarlos con criterios de eficiencia.",
+    "fuentes": ["F01", "F02"]
+  },
+  {
+    "id": "transversales",
+    "orden": 5,
+    "titulo": "Trabajar con otras personas",
+    "descripcion": "Te comunicas, colaboras en equipo, sigues aprendiendo por tu cuenta, emprendes e innovas con responsabilidad social.",
+    "fuentes": ["F01"]
+  }
+]

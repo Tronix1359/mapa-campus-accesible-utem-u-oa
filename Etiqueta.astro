@@ -1,0 +1,31 @@
+---
+/**
+ * Etiqueta.astro — Marca visible del tipo de afirmación
+ *
+ * La guía de estilo exige distinguir a simple vista el dato institucional,
+ * la interpretación del equipo y el testimonio. La distinción no depende
+ * solo del color: cada etiqueta lleva texto y un símbolo distinto
+ * (WCAG 1.4.1, uso del color).
+ */
+import type { TipoAfirmacion } from '../lib/formato';
+
+interface Props {
+  tipo: TipoAfirmacion;
+}
+
+const { tipo } = Astro.props;
+
+/** Texto y símbolo de cada tipo. `Record` obliga a cubrir los tres casos. */
+const variantes: Readonly<Record<TipoAfirmacion, { texto: string; simbolo: string }>> = {
+  dato: { texto: 'Dato institucional', simbolo: '■' },
+  interpretacion: { texto: 'Interpretación del equipo', simbolo: '◆' },
+  testimonio: { texto: 'Testimonio: opinión personal', simbolo: '●' },
+};
+
+const variante = variantes[tipo];
+---
+
+<span class={`etiqueta etiqueta--${tipo}`}>
+  <span aria-hidden="true">{variante.simbolo}</span>
+  {variante.texto}
+</span>

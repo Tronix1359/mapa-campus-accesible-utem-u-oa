@@ -1,0 +1,70 @@
+---
+/**
+ * SobreCarrera.astro — ¿En qué se diferencia?
+ *
+ * Compara la carrera con dos carreras afines de la misma universidad.
+ * Los datos de cada carrera vienen de su fuente oficial (colección
+ * `afines`). La lectura comparada es análisis propio y se marca con la
+ * etiqueta "Interpretación del equipo", como exige el encargo.
+ *
+ * Se usa una <table> porque son datos tabulares reales: cada fila es una
+ * carrera y cada columna un atributo. <caption> y <th scope> permiten que
+ * un lector de pantalla anuncie a qué carrera pertenece cada celda.
+ */
+import { getCollection } from 'astro:content';
+import Seccion from './Seccion.astro';
+import Cita from './Cita.astro';
+import Etiqueta from './Etiqueta.astro';
+
+const carreras = await getCollection('afines');
+// La carrera propia va primero; el resto conserva el orden del archivo.
+const ordenadas = [...carreras].sort((a, b) => Number(b.data.propia) - Number(a.data.propia));
+---
+
+<Seccion id="carrera" pregunta="¿En qué se diferencia de carreras parecidas?" titulo="Sobre la carrera">
+  <p class="entrada">
+    La UTEM dicta tres carreras del área de computación. Comparten el campus, pero no duran lo
+    mismo ni apuntan al mismo trabajo.
+  </p>
+
+  <div class="tabla-envoltorio" role="region" aria-labelledby="tabla-afines-titulo" tabindex="0">
+    <table class="tabla">
+      <caption id="tabla-afines-titulo">Comparación con dos carreras afines de la UTEM</caption>
+      <thead>
+        <tr>
+          <th scope="col">Carrera</th>
+          <th scope="col">Duración</th>
+          <th scope="col">Grado académico</th>
+          <th scope="col">Foco declarado</th>
+        </tr>
+      </thead>
+      <tbody>
+        {
+          ordenadas.map((carrera) => (
+            <tr class:list={{ 'tabla__fila--propia': carrera.data.propia }}>
+              <th scope="row">
+                {carrera.data.nombre}
+                <Cita fuentes={carrera.data.fuentes} />
+              </th>
+              <td>{carrera.data.semestres} semestres</td>
+              <td>{carrera.data.grado}</td>
+              <td>{carrera.data.enfoque}</td>
+            </tr>
+          ))
+        }
+      </tbody>
+    </table>
+  </div>
+
+  <div class="nota nota--interpretacion">
+    <Etiqueta tipo="interpretacion" />
+    <p>
+      Leemos estos datos así: Ingeniería en Informática es la ruta más corta de las tres. Dura
+      tres semestres menos y se concentra en construir y operar soluciones.
+    </p>
+    <p>
+      Las dos ingenierías civiles suman más ciencias de la ingeniería. Una apunta a dirigir
+      proyectos y la otra a trabajar con datos masivos.
+    </p>
+  </div>
+</Seccion>

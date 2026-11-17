@@ -1,0 +1,8 @@
+[
+  { "id": "m1", "orden": 1, "factor": "Competencia Matemática 1 (M1)", "porcentaje": 30, "fuentes": ["F01", "F04"] },
+  { "id": "ranking", "orden": 2, "factor": "Ranking de notas", "porcentaje": 25, "fuentes": ["F01", "F04"] },
+  { "id": "lectora", "orden": 3, "factor": "Competencia Lectora", "porcentaje": 20, "fuentes": ["F01", "F04"] },
+  { "id": "nem", "orden": 4, "factor": "Notas de Enseñanza Media (NEM)", "porcentaje": 10, "fuentes": ["F01", "F04"] },
+  { "id": "electiva", "orden": 5, "factor": "Prueba electiva: Ciencias o Historia y Ciencias Sociales", "porcentaje": 10, "fuentes": ["F01", "F04"] },
+  { "id": "m2", "orden": 6, "factor": "Competencia Matemática 2 (M2)", "porcentaje": 5, "fuentes": ["F01", "F04"] }
+]

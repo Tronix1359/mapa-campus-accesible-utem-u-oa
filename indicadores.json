@@ -1,0 +1,60 @@
+[
+  {
+    "id": "empleabilidad-1",
+    "grupo": "empleo",
+    "orden": 1,
+    "etiqueta": "Empleabilidad al primer año de titulación",
+    "valor": "89,6 %",
+    "periodo": "Ficha de carrera 2026",
+    "nota": "La ficha cita al Servicio de Información de Educación Superior (SIES) y no indica el año de la cohorte medida.",
+    "fuentes": ["F02"]
+  },
+  {
+    "id": "empleabilidad-2",
+    "grupo": "empleo",
+    "orden": 2,
+    "etiqueta": "Empleabilidad al segundo año de titulación",
+    "valor": "95,3 %",
+    "periodo": "Ficha de carrera 2026",
+    "nota": "La ficha cita al SIES y no indica el año de la cohorte medida.",
+    "fuentes": ["F02"]
+  },
+  {
+    "id": "promedio-minimo",
+    "grupo": "admision",
+    "orden": 1,
+    "etiqueta": "Promedio mínimo entre Competencia Lectora y Matemática 1",
+    "valor": "458 puntos",
+    "periodo": "Admisión 2027",
+    "fuentes": ["F01", "F04"]
+  },
+  {
+    "id": "vacantes",
+    "grupo": "admision",
+    "orden": 2,
+    "etiqueta": "Vacantes",
+    "valor": "150",
+    "periodo": "Admisión 2027",
+    "fuentes": ["F01", "F04"]
+  },
+  {
+    "id": "arancel",
+    "grupo": "admision",
+    "orden": 3,
+    "etiqueta": "Arancel anual de referencia",
+    "valor": "$4.763.300",
+    "periodo": "Año 2026",
+    "nota": "Se puede pagar en hasta 10 cuotas mensuales. El valor 2027 puede cambiar.",
+    "fuentes": ["F04"]
+  },
+  {
+    "id": "matricula",
+    "grupo": "admision",
+    "orden": 4,
+    "etiqueta": "Matrícula",
+    "valor": "$90.000",
+    "periodo": "Año 2026",
+    "nota": "Si obtienes gratuidad, esta cubre el monto.",
+    "fuentes": ["F04"]
+  }
+]
